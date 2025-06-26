@@ -125,17 +125,13 @@ module emu
 	input         OSD_STATUS
 );
 
-//assign USER_OUT[3] = 1'b1;
-//assign USER_OUT[5] = 1'b1;
-//assign USER_OUT[6] = 1'b1;
-
 assign ADC_BUS  = 'Z;
 
 assign UART_DTR = UART_DSR;
 assign UART_RTS = uart ? usart_rts : UART_CTS;
 assign UART_TXD = uart ? usart_so  : midi_tx;
 
-//assign USER_OUT  = '1;
+assign USER_OUT  = '1;
 
 assign AUDIO_MIX = 0;
 
@@ -1172,13 +1168,7 @@ fdc1772 #(.SECTOR_SIZE_CODE(2'd2),.SECTOR_BASE(1'b1)) fdc1772 (
 	.sd_buff_addr   ( sd_buff_addr     ),
 	.sd_dout        ( sd_buff_dout     ),
 	.sd_din         ( sd_buff_din      ),
-	.sd_dout_strobe ( sd_buff_wr       ),
-	
-	//floppy signal output
-	.step_IO        ( step_IO          ),
-	.direc_IO       ( direc_IO         ),
-	.motor_IO       ( motor_IO         ),
-	.sel0_IO        ( sel0_IO          )
+	.sd_dout_strobe ( sd_buff_wr       )
 );
 
 /* ------------------------------------------------------------------------------ */
@@ -1280,10 +1270,4 @@ sdram sdram (
 	.rom_dout      ( rom_data_out             )
 );
 
-// Floppy output signals (TODO: Extrapolate correct signals, this is a fudge!)
-
-assign USER_OUT[2] = step_IO;
-assign USER_OUT[3] = direc_IO;
-assign USER_OUT[0] = sel0_IO;
-assign USER_OUT[1] = motor_IO;
 endmodule
